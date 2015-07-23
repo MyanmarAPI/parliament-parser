@@ -1,11 +1,12 @@
 {
   "name": "parliament-parser",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "parse PDF from Myanmar parliament into CSV",
   "author": "The Asia Foundation",
   "license": "MIT",
   "dependencies": {
     "fast-csv": "^0.6.0",
+    "my-diacritic-sort": "^1.0.1",
     "myanmar-numbers": "^1.0.2",
     "pdf-extract": "^1.0.8",
     "sqlite3": "^3.0.9"

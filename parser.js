@@ -5,6 +5,7 @@
 var fs = require("fs");
 var pdf_extract = require("pdf-extract");
 var csv = require("fast-csv");
+var sortDiacritics = require("my-diacritic-sort");
 var myanmarNumbers = require("myanmar-numbers").myanmarNumbers;
 
 if (process.argv.length > 2) {
@@ -37,7 +38,7 @@ if (process.argv.length > 2) {
 
     var processWardsAndVillages = function() {
       // this is the main separator used
-      var wvs = ward_village_text.split("၊"); // /၊|။/);
+      var wvs = sortDiacritics(ward_village_text).split("၊"); // /၊|။/);
       for (var w = 0; w < wvs.length; w++) {
         // neaten up names
         ward_village = wvs[w].trim().replace(/\s\s+/g, '  ');
@@ -51,7 +52,7 @@ if (process.argv.length > 2) {
         csvStream.write({
           serial: serial,
           constituency_number: constituency_number,
-          township: township,
+          township: sortDiacritics(township),
           ward_village: ward_village
         });
       }
