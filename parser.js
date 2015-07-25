@@ -31,6 +31,8 @@ if (process.argv.length > 2) {
   processor.on('complete', function(data) {
     var serial = null;
     var constituency_number = null;
+    var all_townships = [];
+    var all_wards = [];
     var township = null;
     var wards_and_villages = [];
     var ward_village_text = "";
@@ -38,10 +40,16 @@ if (process.argv.length > 2) {
 
     var processWardsAndVillages = function() {
       // this is the main separator used
+      if (all_townships.indexOf(township) === -1) {
+        all_townships.push(township);
+      }
       var wvs = sortDiacritics(ward_village_text).split("၊"); // /၊|။/);
       for (var w = 0; w < wvs.length; w++) {
         // neaten up names
         ward_village = wvs[w].trim().replace(/\s\s+/g, '  ');
+        var wv_num = (ward_village.match(/\d+။/) || [0])[0];
+        ward_village = ward_village.replace(/\d+။/, '').trim();
+        all_wards.push(ward_village);
 
         // remove blank wards and villages
         if (!ward_village) {
@@ -53,6 +61,7 @@ if (process.argv.length > 2) {
           serial: serial,
           constituency_number: constituency_number,
           township: sortDiacritics(township),
+          ward_village_number: wv_num,
           ward_village: ward_village
         });
       }
@@ -120,8 +129,20 @@ if (process.argv.length > 2) {
     // process the last section
     processWardsAndVillages();
 
-    // save the file
+    // save the main csv file
     csvStream.end();
+
+    fs.writeFile("townships.json", JSON.stringify(all_townships), function(err) {
+      if (err) {
+        console.log(err);
+      }
+    });
+
+    fs.writeFile("wards.json", JSON.stringify(all_wards), function(err) {
+      if (err) {
+        console.log(err);
+      }
+    });
   });
 
   // only read this for errors =(
