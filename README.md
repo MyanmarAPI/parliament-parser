@@ -2,9 +2,23 @@
 
 ## Data
 
-The constituencies folder contains original PDFs and output CSVs.
+The pdf folder contains original PDFs from the Myanmar Union Election Commission.
 
-Note that "Pyithu" has a different format and is currently unparsed.
+Word Docs are not available to the public but were essential to getting the organized-txt files and final constituency lists.
+
+The organized-txt folder contains a list of constituencies using the format:
+
+```
+1st_KNOWN_CONSTITUENCY_NAME
+list of wards in the 1st constituency (typically separated by a ၊ mark)
+additional lines with more wards in the first constituency
+(BLANK LINE)
+list of wards in the 2nd constituency
+...
+2nd_KNOWN_CONSTITUENCY_NAME
+```
+
+The csv folder contains CSVs with a row for each ward.
 
 ## Install
 
@@ -24,7 +38,7 @@ node parser.js constituencies/AmyotharHulttaw.pdf constituencies/AmyotharHulttaw
 
 ## Language notes
 
-The legislature docs use an unusual font / encoding. This does not currently fix the encoding to proper Unicode.
+The legislature PDFs are based on Unicode characters and Myanmar3 font, but have unusual errors with the order and placement of diacritics. Use my-diacritic-sort module to sort them.
 
 Myanmar numerals are converted to digits 0-9 for readability
 
