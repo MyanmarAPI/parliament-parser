@@ -38,12 +38,13 @@ if (process.argv.length > 3) {
 
       var processWardsAndVillages = function() {
         // this is the main separator used
-        var wvs = ward_village_text.split("၊"); // /၊|။/);
+        var wvs = ward_village_text.replace(/(စု|\))\s+(\d+)။/g, "$1၊$2။").split("၊"); // /၊|။/);
         for (var w = 0; w < wvs.length; w++) {
           // neaten up names
           ward_village = wvs[w].trim().replace(/\s\s+/g, '  ');
-          var wv_num = (ward_village.match(/\d+။/) || ['0'])[0].replace("။", "");
-          ward_village = ward_village.replace(/\d+။/, '').trim();
+          ward_village = ward_village.replace(/(\d)ဝ/g, '$10');
+          var wv_num = (ward_village.match(/\d+\s?။\s?/) || ['0'])[0].replace(/\s?။\s?/, "");
+          ward_village = ward_village.replace(/\d+\s?။/g, '').replace(/။/g, '').trim();
 
           // remove blank wards and villages
           if (!ward_village) {
