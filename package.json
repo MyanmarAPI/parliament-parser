@@ -1,6 +1,6 @@
 {
   "name": "parliament-parser",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "parse PDF from Myanmar parliament into CSV",
   "author": "The Asia Foundation",
   "license": "MIT",
